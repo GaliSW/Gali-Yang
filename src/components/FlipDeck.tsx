@@ -44,6 +44,7 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const lastWheelAt = useRef(0);
   const cooldownUntil = useRef(0);
   const touchY = useRef(0);
+  const touchEdge = useRef({ top: true, bottom: true });
 
   const dispatch = useCallback((e: FlipEvent) => rawDispatch(e), []);
   const handleIntroDone = useCallback(() => { introSeen = true; setIntro(false); }, []);
@@ -57,8 +58,25 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
 
   useEffect(() => {
     if (reduce) return; // reduced-motion:一般文件流,不劫持
+    // 內容超過視窗高度的板塊:先滾動內部,滾到邊緣才翻頁
+    const activeSectionEl = () =>
+      document.querySelector<HTMLElement>('[data-flip-active="true"]');
+    const edgeState = (el: HTMLElement | null) => ({
+      top: !el || el.scrollTop <= 2,
+      bottom: !el || el.scrollTop + el.clientHeight >= el.scrollHeight - 2,
+    });
+
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
+      const el = activeSectionEl();
+      if (el && el.scrollHeight > el.clientHeight + 4) {
+        const edge = edgeState(el);
+        if ((e.deltaY > 0 && !edge.bottom) || (e.deltaY < 0 && !edge.top)) {
+          el.scrollTop += e.deltaY; // 板塊內部滾動,不觸發翻頁
+          wheelAcc.current = 0;
+          return;
+        }
+      }
       const now = performance.now();
       if (now < cooldownUntil.current) { wheelAcc.current = 0; return; } // 翻轉剛結束:吃掉慣性尾巴
       if (now - lastWheelAt.current > WHEEL_IDLE_RESET_MS) wheelAcc.current = 0; // 新手勢,不累計舊值
@@ -75,10 +93,16 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
       if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); dispatch({ type: 'advance' }); }
       if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); dispatch({ type: 'retreat' }); }
     };
-    const onTouchStart = (e: TouchEvent) => { touchY.current = e.touches[0].clientY; };
+    const onTouchStart = (e: TouchEvent) => {
+      touchY.current = e.touches[0].clientY;
+      // 記錄觸控開始時是否已在邊緣:內容先滾完,下一次滑動才翻頁
+      touchEdge.current = edgeState(activeSectionEl());
+    };
     const onTouchEnd = (e: TouchEvent) => {
       const dy = touchY.current - e.changedTouches[0].clientY;
-      if (Math.abs(dy) > TOUCH_THRESHOLD) dispatch({ type: dy > 0 ? 'advance' : 'retreat' });
+      if (Math.abs(dy) < TOUCH_THRESHOLD) return;
+      if (dy > 0 && touchEdge.current.bottom) dispatch({ type: 'advance' });
+      else if (dy < 0 && touchEdge.current.top) dispatch({ type: 'retreat' });
     };
     addEventListener('wheel', onWheel, { passive: false });
     addEventListener('keydown', onKey);
@@ -157,7 +181,8 @@ function SectionShell({ children, className, active, onSettled }: {
 }) {
   const ref = useStaggerIn(active);
   return (
-    <div ref={ref} className={`absolute inset-0 ${className}`}
+    <div ref={ref} data-flip-active={active}
+      className={`absolute inset-0 overflow-y-auto overscroll-contain ${className}`}
       onAnimationEnd={(e) => { if (e.animationName.startsWith('flipIn')) onSettled?.(); }}>
       {children}
     </div>
