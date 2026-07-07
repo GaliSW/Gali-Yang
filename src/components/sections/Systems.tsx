@@ -2,6 +2,7 @@
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { systems } from '@/content/projects';
+import TransitionLink from '@/components/TransitionLink';
 
 const ProjectPlaneLazy = dynamic(() => import('@/components/gl/ProjectPlane'), { ssr: false });
 
@@ -29,7 +30,7 @@ export default function Systems({ step = 0, locale, gl }: Props & { gl?: boolean
               <span className="font-mono text-xs tracking-widest text-accent" style={{ fontFamily: 'var(--font-mono-brand)' }}>{s.tag[locale]}</span>
               <h3 className="mt-3 text-3xl font-semibold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{s.name[locale]}</h3>
               <p className="mt-3 max-w-[42ch] text-sm text-muted">{s.blurb[locale]}</p>
-              <a href={s.url} className="mt-5 inline-block border-b border-accent pb-1 font-mono text-xs text-fg hover:text-accent" style={{ fontFamily: 'var(--font-mono-brand)' }}>{t('view')} →</a>
+              <TransitionLink href={`/work/${s.slug}`} className="mt-5 inline-block border-b border-accent pb-1 font-mono text-xs text-fg hover:text-accent">{t('view')} →</TransitionLink>
             </div>
           </article>
         ))}

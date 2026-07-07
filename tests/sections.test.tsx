@@ -1,12 +1,20 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
+import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import zh from '@/messages/zh.json';
 import Gate from '@/components/sections/Gate';
 import Systems from '@/components/sections/Systems';
 
+const mockRouter = {
+  push: vi.fn(), replace: vi.fn(), refresh: vi.fn(),
+  back: vi.fn(), forward: vi.fn(), prefetch: vi.fn(),
+} as unknown as Parameters<typeof AppRouterContext.Provider>[0]['value'];
+
 const wrap = (ui: React.ReactNode) => (
-  <NextIntlClientProvider locale="zh" messages={zh}>{ui}</NextIntlClientProvider>
+  <AppRouterContext.Provider value={mockRouter}>
+    <NextIntlClientProvider locale="zh" messages={zh}>{ui}</NextIntlClientProvider>
+  </AppRouterContext.Provider>
 );
 
 describe('板塊元件', () => {
