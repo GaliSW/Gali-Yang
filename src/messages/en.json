@@ -1,4 +1,11 @@
 {
   "site": { "brand": "YOURNAME", "title": "YOURNAME: Freelance Developer", "description": "E-commerce sites, custom systems, and interfaces worth pausing for." },
-  "hero": { "line1": "Familiar interfaces,", "line2": "unexpected behavior.", "line3": "介面實驗中。", "sub": "Freelance developer. E-commerce sites, custom systems, and interfaces worth pausing for." }
+  "hero": { "line1": "Familiar interfaces,", "line2": "unexpected behavior.", "line3": "介面實驗中。", "sub": "Freelance developer. E-commerce sites, custom systems, and interfaces worth pausing for." },
+  "info": {
+    "title": "YOURNAME: Freelance Developer",
+    "lede": "This is the static version of this site. Content is identical to the interactive one.",
+    "systemsHead": "Systems",
+    "clientsHead": "Client Sites",
+    "contact": "Contact"
+  }
 }
