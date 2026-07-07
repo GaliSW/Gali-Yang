@@ -1,7 +1,7 @@
-// 聯繫資訊:填入真實值後,Contact 板塊會自動顯示對應項目(空字串 = 不顯示)
+// 聯繫資訊:Contact 板塊與 /info 皆從這裡取值(空字串 = 該項不顯示)
 export const contact = {
-  email: 'hello@yourname.dev', // TODO: 換成真實信箱
-  lineUrl: '', // TODO: LINE 連結,例如 'https://line.me/ti/p/xxxxx'
-  instagram: '', // TODO: IG 帳號,例如 'gary.yang.dev'(不含 @)
-  phone: '', // TODO: 公開電話,例如 '0912 345 678'
+  email: 'gary850204@gmail.com',
+  lineUrl: 'https://line.me/ti/p/KYqm29h9QK',
+  instagram: 'gali_ysw',
+  phone: '+886 979 526 393',
 };
