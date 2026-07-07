@@ -22,7 +22,7 @@ export default function LogoIntro({ onDone }: { onDone: () => void }) {
 
   return (
     <div ref={ref} className="fixed inset-0 z-50 grid place-items-center bg-deep">
-      <svg width="120" height="120" viewBox="0 0 100 100" fill="none" stroke="#22C55E" strokeWidth="2" aria-label="YOURNAME">
+      <svg width="120" height="120" viewBox="0 0 100 100" fill="none" stroke="#22C55E" strokeWidth="2" aria-label="GARY YANG">
         <rect x="14" y="14" width="72" height="72" />
         <line x1="14" y1="86" x2="86" y2="14" />
         <line x1="30" y1="70" x2="70" y2="70" />

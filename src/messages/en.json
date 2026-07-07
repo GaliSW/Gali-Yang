@@ -1,17 +1,17 @@
 {
   "site": {
-    "brand": "YOURNAME",
-    "title": "YOURNAME: Freelance Developer",
-    "description": "E-commerce sites, custom systems, and interfaces worth pausing for."
+    "brand": "GARY YANG",
+    "title": "Gary Yang: Design-to-Deploy Web Development",
+    "description": "One-stop web development, from design to deployment. E-commerce, brand sites, custom systems, and AI automation."
   },
   "hero": {
-    "line1": "Stores that ship fast,",
-    "line2": "systems built from zero.",
-    "line3": "電商 × 系統 × 動效",
-    "sub": "Freelance developer. Duda and WordPress storefronts, custom POS and CRM systems from database to UI. This site is the demo."
+    "line1": "From design to launch,",
+    "line2": "one developer, end to end.",
+    "line3": "設計 × 開發 × 上線",
+    "sub": "I'm Gary Yang. E-commerce platforms, brand sites, custom systems, and AI automation for SMEs: from business logic to shipped product."
   },
   "info": {
-    "title": "YOURNAME: Freelance Developer",
+    "title": "Gary Yang: Design-to-Deploy Web Development",
     "lede": "This is the static version of this site. Content is identical to the interactive one.",
     "systemsHead": "Systems",
     "clientsHead": "Client Sites",
@@ -41,30 +41,66 @@
   },
   "about": {
     "label": "ABOUT",
-    "head": "E-commerce launched the fastest way possible, systems built with my own code.",
-    "p1": "Freelance developer. Client e-commerce sites go live fast and stable on Duda or WordPress; systems that need a custom fit, I write myself, from database to interface. This site itself is proof of my frontend skills.",
+    "head": "Business needs, translated into flexible, scalable digital solutions.",
+    "p1": "I'm a web developer with hands-on experience across industries. From building e-commerce platforms and brand sites from scratch to custom management systems, I deliver flexible, scalable solutions.",
+    "p2": "Beyond traditional development, I help SMEs bring AI automation into their key workflows: one integrated service from business logic to shipped tech.",
+    "stats": [
+      {
+        "n": "1.5+",
+        "unit": "Years",
+        "t": "Hands-on experience",
+        "d": "High-density project work"
+      },
+      {
+        "n": "20+",
+        "unit": "Projects",
+        "t": "Diverse projects",
+        "d": "Zero to launch, fast"
+      },
+      {
+        "n": "10+",
+        "unit": "Clients",
+        "t": "Business clients",
+        "d": "Cross-industry partners"
+      }
+    ],
+    "domainsHead": "Domain Expertise",
+    "domains": [
+      "Cross-border e-commerce",
+      "SaaS",
+      "Online education platforms",
+      "Fashion e-commerce",
+      "Brand sites",
+      "Food e-commerce"
+    ],
+    "domainNote": "Cross-industry fluency: high-traffic checkout flows or complex back offices, translated precisely into architecture.",
+    "stackHead": "Tech Stack",
     "caps": [
       {
-        "t": "In-house Systems",
-        "d": "Database to interface"
+        "t": "Frontend",
+        "d": "React · Next.js · Vue · Tailwind CSS"
       },
       {
-        "t": "Duda / WordPress",
-        "d": "Fast e-commerce builds"
+        "t": "Backend & Data",
+        "d": "Node.js · Python · PHP"
       },
       {
-        "t": "Next.js / React",
-        "d": "Architecture and performance"
+        "t": "Store Builds",
+        "d": "Duda · WordPress / WooCommerce"
       },
       {
-        "t": "WebGL / anime.js",
-        "d": "This site is the demo"
+        "t": "AI Automation",
+        "d": "Key workflows for SMEs"
       }
     ]
   },
   "contact": {
     "email": "hello@yourname.dev",
-    "line": "Got a project to discuss? Send me an email."
+    "line": "Got a project in mind? Start with a free consultation.",
+    "cta": "Book a free consultation",
+    "phoneLabel": "Phone",
+    "lineLabel": "LINE",
+    "igLabel": "Instagram"
   },
   "a11y": {
     "langSwitch": "Switch language",

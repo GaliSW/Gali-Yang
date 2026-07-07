@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { systems, clientSites } from '@/content/projects';
+import { contact } from '@/content/contact';
 import { Link } from '@/i18n/routing';
 
 const ACCENT = '#0B7A3E';
@@ -66,7 +67,7 @@ export default function InfoContent({ locale }: { locale: 'zh' | 'en' }) {
 
         <footer className="mt-14 rounded-lg border border-[#D8DEE9] bg-white p-6 shadow-sm">
           <p className="font-medium">
-            {t('contact')}:<a className="underline underline-offset-4" style={{ color: ACCENT }} href="mailto:hello@yourname.dev">hello@yourname.dev</a>
+            {t('contact')}:<a className="underline underline-offset-4" style={{ color: ACCENT }} href={`mailto:${contact.email}`}>{contact.email}</a>
           </p>
         </footer>
       </div>

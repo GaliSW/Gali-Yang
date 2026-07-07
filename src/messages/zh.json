@@ -1,17 +1,17 @@
 {
   "site": {
-    "brand": "YOURNAME",
-    "title": "YOURNAME:接案開發者",
-    "description": "電商網站與客製系統,加上一點讓人停下來的介面。"
+    "brand": "GARY YANG",
+    "title": "Gary Yang:從設計到上線,一站式網頁整合開發",
+    "description": "從設計到上線,提供一站式網頁整合開發服務。電商平台、形象官網、客製系統與 AI 自動化導入。"
   },
   "hero": {
-    "line1": "電商快速上線,",
-    "line2": "系統從零打造。",
-    "line3": "Ship fast. Build deep.",
-    "sub": "接案開發者。Duda / WordPress 電商架站,POS、CRM 等客製系統從資料庫寫到介面。這個網站,就是能力展示。"
+    "line1": "從設計到上線,",
+    "line2": "一站式整合開發。",
+    "line3": "Design. Build. Ship.",
+    "sub": "我是 Gary Yang,擅長深入理解不同產業的商務需求。電商平台、形象官網、客製系統到 AI 自動化導入,從商業邏輯到技術落地,一次到位。"
   },
   "info": {
-    "title": "YOURNAME:接案開發者",
+    "title": "Gary Yang:一站式網頁整合開發",
     "lede": "這是本站的靜態版本,內容與互動版完全相同。",
     "systemsHead": "自研系統",
     "clientsHead": "接案網站",
@@ -41,30 +41,66 @@
   },
   "about": {
     "label": "ABOUT / 關於",
-    "head": "電商用最快的方式上線,系統用自己的程式碼打造。",
-    "p1": "接案開發者。客戶的電商官網用 Duda 或 WordPress 快速穩定地架起來;需要量身打造的系統,從資料庫到介面都自己寫。這個網站本身,就是我前端能力的證明。",
+    "head": "深入理解商務需求,轉化為高靈活、高擴充的數位解決方案。",
+    "p1": "我是擁有多年經驗的網站開發者,擅長深入理解不同產業的商務需求。無論是從零打造電商平台、企業形象網站,還是客製化管理系統,我都能提供高靈活與高擴充性的數位解決方案。",
+    "p2": "除了傳統系統開發,我也專精於協助中小企業進行關鍵流程的 AI 自動化導入,提供從商業邏輯到技術落地的一站式整合服務。",
+    "stats": [
+      {
+        "n": "1.5+",
+        "unit": "Years",
+        "t": "實戰開發經驗",
+        "d": "高密度的專案洗禮"
+      },
+      {
+        "n": "20+",
+        "unit": "Projects",
+        "t": "多元專案經手",
+        "d": "從零到一快速落地"
+      },
+      {
+        "n": "10+",
+        "unit": "Clients",
+        "t": "企業客戶信賴",
+        "d": "跨產業的數位夥伴"
+      }
+    ],
+    "domainsHead": "產業經驗",
+    "domains": [
+      "跨境電商",
+      "SaaS 服務",
+      "線上教育平台",
+      "服飾品牌電商",
+      "形象官網",
+      "食品電商"
+    ],
+    "domainNote": "具備跨產業理解力,不論是高流量購物流程或複雜後台,皆能精準轉化為技術架構。",
+    "stackHead": "技術棧",
     "caps": [
       {
-        "t": "自研系統",
-        "d": "資料庫到介面"
+        "t": "前端 Frontend",
+        "d": "React · Next.js · Vue · Tailwind CSS"
       },
       {
-        "t": "Duda / WordPress",
-        "d": "電商快速架站"
+        "t": "後端與資料庫 Backend",
+        "d": "Node.js · Python · PHP"
       },
       {
-        "t": "Next.js / React",
-        "d": "架構與效能"
+        "t": "電商架站",
+        "d": "Duda · WordPress / WooCommerce"
       },
       {
-        "t": "WebGL / anime.js",
-        "d": "本站就是示範"
+        "t": "AI 自動化",
+        "d": "中小企業關鍵流程導入"
       }
     ]
   },
   "contact": {
     "email": "hello@yourname.dev",
-    "line": "有案子想聊?寫信給我。"
+    "line": "有案子想聊?從一次免費諮詢開始。",
+    "cta": "預約免費初步需求諮詢",
+    "phoneLabel": "電話",
+    "lineLabel": "LINE",
+    "igLabel": "Instagram"
   },
   "a11y": {
     "langSwitch": "切換語言",
