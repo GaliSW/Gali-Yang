@@ -7,5 +7,9 @@
     "systemsHead": "Systems",
     "clientsHead": "Client Sites",
     "contact": "Contact"
-  }
+  },
+  "gate": { "head": "This site is an interactive experiment.", "body": "It involves a lot of motion and 3D movement in space. If you prefer a quiet read, we've prepared a full static version.", "enter": "ENTER EXPERIENCE", "read": "READ STATIC VERSION" },
+  "works": { "systemsHead": "Systems", "systemsSub": "In house systems. Core products built from scratch, frontend and backend both my own code.", "clientsHead": "Client Sites", "clientsSub": "Freelance work. Duda and WordPress e-commerce builds: fast, stable, easy to maintain.", "view": "VIEW PROJECT" },
+  "about": { "label": "ABOUT", "head": "E-commerce launched the fastest way possible, systems built with my own code.", "p1": "Freelance developer. Client e-commerce sites go live fast and stable on Duda or WordPress; systems that need a custom fit, I write myself, from database to interface. This site itself is proof of my frontend skills.", "caps": [{ "t": "In house Systems", "d": "Database to interface" }, { "t": "Duda / WordPress", "d": "Fast e-commerce builds" }, { "t": "Next.js / React", "d": "Architecture and performance" }, { "t": "WebGL / anime.js", "d": "This site is the demo" }] },
+  "contact": { "email": "hello@yourname.dev", "line": "Got a project to discuss? Send me an email." }
 }
