@@ -1,0 +1,762 @@
+<title>作品集設計稿 v1:極端實驗型 Portfolio</title>
+<style>
+  :root {
+    --bg: #0F172A;
+    --bg-deep: #0A101F;
+    --bg-raise: #16203A;
+    --fg: #F8FAFC;
+    --muted: #8A94A8;
+    --accent: #22C55E;
+    --accent-dim: rgba(34, 197, 94, 0.14);
+    --line: rgba(148, 163, 184, 0.18);
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: "Space Grotesk", "Archivo", "Noto Sans TC", ui-sans-serif, "Helvetica Neue", Arial, "PingFang TC", sans-serif;
+  }
+  /* 本設計稿刻意鎖定深色:實際網站為深色單主題 */
+  :root[data-theme="light"] { --bg: #0F172A; }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    margin: 0;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: var(--bg-deep); }
+
+  /* ── 設計稿框架(meta 層) ────────────────────── */
+  .doc-band {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-deep);
+    padding: 10px 24px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .doc-band strong { color: var(--accent); font-weight: 500; }
+
+  .spec {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 20px 24px 8px;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .spec-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+  .spec p { margin: 0; font-size: 13.5px; color: var(--muted); max-width: 72ch; }
+  .spec p b { color: var(--fg); font-weight: 500; }
+
+  /* ── 模擬視窗 ────────────────────── */
+  .frame {
+    max-width: 1080px;
+    margin: 12px auto 72px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg);
+    box-shadow: 0 30px 80px rgba(4, 8, 18, 0.6);
+  }
+  .frame-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .frame-bar i {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--line); display: inline-block; font-style: normal;
+  }
+
+  /* ── 入口警告畫面 ────────────────────── */
+  .gate {
+    min-height: 420px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 48px 24px;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 60%, rgba(34,197,94,0.06), transparent),
+      var(--bg-deep);
+  }
+  .gate-inner { max-width: 460px; }
+  .gate h2 {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .gate p { color: var(--muted); font-size: 14.5px; margin: 0 0 28px; }
+  .btn-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    padding: 13px 26px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #06130A;
+    font-weight: 600;
+    transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), background 0.18s;
+  }
+  .btn:hover { transform: translateY(-1px); background: #2ee06d; }
+  .btn:active { transform: scale(0.98); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--fg);
+    border-color: var(--line);
+    font-weight: 400;
+  }
+  .btn.ghost:hover { border-color: var(--muted); background: rgba(148,163,184,0.06); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* ── Hero ────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 620px;
+    overflow: hidden;
+    background: var(--bg-deep);
+  }
+  #field { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero-nav {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 34px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+  }
+  .hero-nav .brand { letter-spacing: 0.18em; color: var(--fg); }
+  .hero-nav .lang { color: var(--muted); }
+  .hero-nav .lang b { color: var(--accent); font-weight: 500; cursor: pointer; }
+  .hero-nav .lang span { cursor: pointer; }
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+    padding: 90px 34px 60px;
+  }
+  .hero-copy h1 {
+    font-size: clamp(44px, 8.5vw, 108px);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    font-weight: 600;
+    margin: 0;
+    max-width: 11ch;
+  }
+  .hero-copy h1 .row { display: block; overflow: hidden; }
+  .hero-copy h1 .row > span {
+    display: inline-block;
+    transform: translateY(110%);
+    animation: rise 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .hero-copy h1 .row:nth-child(2) > span { animation-delay: 0.12s; padding-left: 0.9em; }
+  .hero-copy h1 .row:nth-child(3) > span { animation-delay: 0.24s; }
+  .hero-copy h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  @keyframes rise { to { transform: translateY(0); } }
+  .hero-sub {
+    margin: 34px 0 0;
+    max-width: 40ch;
+    color: var(--muted);
+    font-size: 15.5px;
+  }
+  .hero-meta {
+    position: absolute;
+    right: 34px;
+    bottom: 28px;
+    z-index: 2;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 2;
+  }
+
+  /* ── 作品畫廊 ────────────────────── */
+  .works {
+    padding: 80px 34px 90px;
+    background:
+      linear-gradient(var(--bg-deep), var(--bg) 20%);
+  }
+  .works-head {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    margin: 0 0 8px;
+  }
+  .works-head-zh { color: var(--muted); font-size: 15px; margin: 0 0 56px; }
+  .plane {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 34px;
+    align-items: center;
+    margin-bottom: 84px;
+    opacity: 0;
+    transform: translateY(46px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .plane.in { opacity: 1; transform: translateY(0); }
+  .plane:nth-child(even) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .plane:nth-child(even) .plane-media { order: 2; }
+  .plane-media {
+    aspect-ratio: 16 / 10;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    transform: perspective(1100px) rotateY(var(--ry, -7deg)) rotateX(var(--rx, 2deg));
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    will-change: transform;
+    border: 1px solid var(--line);
+  }
+  .plane:nth-child(even) .plane-media { --ry: 7deg; }
+  .plane-media:hover { transform: perspective(1100px) rotateY(0deg) rotateX(0deg) scale(1.015); }
+  .plane-media .tex {
+    position: absolute; inset: 0;
+    background-size: 340% 340%;
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .p1 .tex { background-image: linear-gradient(115deg, #0d2b1c, #123a5c 35%, #22C55E 60%, #0A101F 85%); }
+  .p2 .tex { background-image: linear-gradient(245deg, #101c3f, #22C55E 45%, #0d3327 70%, #060b16 95%); animation-duration: 18s; }
+  .p3 .tex { background-image: linear-gradient(25deg, #06251a, #1c2f55 40%, #34d399 75%, #0A101F 95%); animation-duration: 11s; }
+  @keyframes drift {
+    from { background-position: 0% 20%; }
+    to   { background-position: 100% 80%; }
+  }
+  .plane-media .grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(248,250,252,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(248,250,252,0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mix-blend-mode: overlay;
+  }
+  .plane-info .idx {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .plane-info h3 {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 10px;
+  }
+  .plane-info p { color: var(--muted); font-size: 14.5px; max-width: 42ch; margin: 0 0 18px; }
+  .plane-info a {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 3px;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .plane-info a:hover { color: var(--accent); }
+
+  /* ── About ────────────────────── */
+  .about {
+    padding: 100px 34px 110px;
+    border-top: 1px solid var(--line);
+    background: var(--bg-deep);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 40px;
+  }
+  .about .col-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+  }
+  .about h2 {
+    font-size: clamp(26px, 4vw, 44px);
+    line-height: 1.25;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin: 0 0 26px;
+    text-wrap: balance;
+  }
+  .about h2 em { font-style: normal; color: var(--accent); }
+  .about p { color: var(--muted); max-width: 58ch; margin: 0 0 14px; font-size: 15px; }
+  .caps {
+    margin: 34px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .caps li {
+    background: var(--bg-deep);
+    padding: 18px 18px 16px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--fg);
+    transition: background 0.25s;
+  }
+  .caps li:hover { background: var(--bg-raise); }
+  .caps li small { display: block; color: var(--muted); margin-top: 6px; font-size: 11px; letter-spacing: 0.04em; }
+
+  /* ── Contact ────────────────────── */
+  .contact {
+    padding: 110px 34px 90px;
+    text-align: left;
+    border-top: 1px solid var(--line);
+  }
+  .contact h2 {
+    font-size: clamp(40px, 7.5vw, 96px);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 0 0 30px;
+  }
+  .contact h2 a {
+    color: var(--fg);
+    text-decoration: none;
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-size: 0% 4px;
+    background-position: 0 96%;
+    transition: background-size 0.5s cubic-bezier(0.16,1,0.3,1), color 0.3s;
+    cursor: pointer;
+  }
+  .contact h2 a:hover { background-size: 100% 4px; color: var(--accent); }
+  .contact-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+  }
+  .contact-foot a { color: var(--muted); text-decoration: none; }
+  .contact-foot a:hover { color: var(--accent); }
+
+  /* ── /info 替代版預覽 ────────────────────── */
+  .plain {
+    background: #F4F6FA;
+    color: #1A2233;
+    padding: 44px 40px 50px;
+    font-size: 14.5px;
+  }
+  .plain h2 { font-size: 24px; letter-spacing: -0.01em; margin: 0 0 6px; font-weight: 600; }
+  .plain .lede { color: #5A6478; margin: 0 0 26px; }
+  .plain ul { margin: 0; padding-left: 20px; color: #333E55; }
+  .plain li { margin-bottom: 8px; }
+  .plain a { color: #0B7A3E; }
+
+  /* ── Token 表 ────────────────────── */
+  .tokens {
+    max-width: 1080px;
+    margin: 0 auto 90px;
+    padding: 0 24px;
+  }
+  .tokens h2 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+  }
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  .sw {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .sw .chip { height: 74px; }
+  .sw .lab {
+    padding: 10px 12px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    background: var(--bg-deep);
+  }
+  .sw .lab b { display: block; color: var(--fg); font-weight: 500; margin-bottom: 2px; }
+  .type-table { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .type-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-row .role {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .t-display { font-size: 44px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.05; }
+  .t-h2 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+  .t-body { font-size: 15.5px; color: var(--muted); max-width: 58ch; }
+  .t-mono { font-family: var(--mono); font-size: 12.5px; color: var(--accent); letter-spacing: 0.1em; }
+
+  @media (max-width: 820px) {
+    .plane, .plane:nth-child(even) { grid-template-columns: 1fr; }
+    .plane:nth-child(even) .plane-media { order: 0; }
+    .about { grid-template-columns: 1fr; }
+    .type-row { grid-template-columns: 1fr; gap: 8px; }
+    .hero-meta { display: none; }
+  }
+  /* ── 進入體驗:narrow 式 3D 翻轉轉場 ────────────────────── */
+  .flip-out {
+    animation: flipOut 0.65s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+    transform-origin: 50% 100%;
+  }
+  @keyframes flipOut {
+    to { transform: perspective(1300px) rotateX(-74deg) translateY(-4%); opacity: 0; }
+  }
+  .flip-in {
+    animation: flipIn 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: 50% 0%;
+  }
+  @keyframes flipIn {
+    from { transform: perspective(1300px) rotateX(58deg); opacity: 0; }
+    to   { transform: none; opacity: 1; }
+  }
+
+  /* ── 接案網站索引 ────────────────────── */
+  .client-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 10px;
+  }
+  .client-wall > div {
+    background: var(--bg);
+    padding: 20px 18px 16px;
+    transition: background 0.25s;
+  }
+  .client-wall > div:hover { background: var(--bg-raise); }
+  .client-wall b { display: block; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 5px; }
+  .client-wall span { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flip-out, .flip-in { animation: none; }
+    .hero-copy h1 .row > span { animation: none; transform: none; }
+    .plane { opacity: 1; transform: none; transition: none; }
+    .plane-media .tex { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+
+<div class="doc-band">
+  <span><strong>作品集設計稿 v1</strong>:極端實驗型創意開發者 Portfolio</span>
+  <span>深色單主題鎖定:Space Grotesk + Archivo + Noto Sans TC(本稿以系統字型近似)</span>
+</div>
+
+<!-- ═══ 0. 入口 ═══ -->
+<section class="spec">
+  <span class="spec-tag">SEC 0:入口閘門</span>
+  <p>比照 narrowdesign 的體驗警告。<b>動效規格:</b>頁面載入後背景粒子先浮現,文字以 anime.js stagger 逐行上升。「進入體驗」觸發 <b>narrow 式 3D 翻轉轉場</b>:目前畫面像卡片一樣向後翻倒,主體驗場景從另一面翻起(實作版由 WebGL 攝影機翻轉整個空間);「閱讀靜態版」直接跳轉 /info。<b>本稿中兩顆按鈕已接上模擬行為,可以點。</b></p>
+</section>
+<div class="frame" id="frame-gate">
+  <div class="frame-bar"><i></i><i></i><i></i>&nbsp; yourname.dev</div>
+  <div class="gate">
+    <div class="gate-inner">
+      <h2>這個網站是一場互動實驗。</h2>
+      <p>包含大量動態與 3D 空間移動。若你偏好安靜的閱讀,我們準備了完整的靜態版本。<br>This site is an interactive experiment. A calm, static version is also available.</p>
+      <div class="btn-row">
+        <button class="btn" id="enter-btn">進入體驗 ENTER</button>
+        <button class="btn ghost" id="read-btn">閱讀靜態版 READ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 1. Hero ═══ -->
+<section class="spec">
+  <span class="spec-tag">SEC 1:WebGL HERO</span>
+  <p>下方粒子場是 <b>實際 WebGL 場景的低保真模擬</b>(滑鼠移過去試試)。實作版:react-three-fiber 粒子場 + 巨型字在 3D 空間中,scroll 時攝影機向前推進、穿過標題進入作品區。字級 clamp(44px → 108px),中英文交錯是刻意的排版語言。</p>
+</section>
+<div class="frame" id="frame-hero">
+  <div class="frame-bar"><i></i><i></i><i></i>&nbsp; / 主體驗</div>
+  <div class="hero">
+    <canvas id="field"></canvas>
+    <nav class="hero-nav">
+      <span class="brand">YOURNAME©</span>
+      <span class="lang"><b>中</b> / <span>EN</span></span>
+    </nav>
+    <div class="hero-copy">
+      <h1>
+        <span class="row"><span>熟悉的介面,</span></span>
+        <span class="row"><span><em>出乎意料</em>的行為。</span></span>
+        <span class="row"><span>Interfaces, unexpected.</span></span>
+      </h1>
+      <p class="hero-sub">接案開發者。電商網站與客製系統,加上一點讓人停下來的介面。E-commerce sites, custom systems, and interfaces worth pausing for.</p>
+    </div>
+    <div class="hero-meta">
+      TAIPEI, TW<br>
+      WEBGL / ANIME.JS / NEXT.JS
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 2. 作品畫廊 ═══ -->
+<section class="spec">
+  <span class="spec-tag">SEC 2:空間畫廊</span>
+  <p>主角是<b>自研系統</b>(大平面,shader 扭曲貼圖呈現);電商架站案例量多,收成下方的緊湊索引牆。流動漸層 = shader 貼圖的模擬,hover 時平面轉正(CSS 3D 模擬,試試看)。點入專案時平面放大成為詳情頁首圖(shared element 轉場)。專案皆為佔位內容,之後替換。</p>
+</section>
+<div class="frame">
+  <div class="frame-bar"><i></i><i></i><i></i>&nbsp; / 主體驗(續)</div>
+  <div class="works">
+    <h2 class="works-head">Systems</h2>
+    <p class="works-head-zh">自研系統。從零打造的核心產品,前後端都是自己的程式碼。</p>
+
+    <article class="plane p1">
+      <div class="plane-media"><div class="tex"></div><div class="grid-lines"></div></div>
+      <div class="plane-info">
+        <span class="idx">SYSTEM / 零售</span>
+        <h3>POS Cloud 雲端櫃位系統</h3>
+        <p>雲端 POS:員工前台收銀,店長進入管理後台。角色權限、櫃位管理、交易流程一手打造。</p>
+        <a>觀看專案 VIEW →</a>
+      </div>
+    </article>
+
+    <article class="plane p2">
+      <div class="plane-media"><div class="tex"></div><div class="grid-lines"></div></div>
+      <div class="plane-info">
+        <span class="idx">SYSTEM / 數據分析</span>
+        <h3>WooCommerce CRM</h3>
+        <p>電商資料統計分析儀表板:把 WooCommerce 商店的銷售與客戶數據變成看得懂的決策依據。</p>
+        <a>觀看專案 VIEW →</a>
+      </div>
+    </article>
+
+    <article class="plane p3">
+      <div class="plane-media"><div class="tex"></div><div class="grid-lines"></div></div>
+      <div class="plane-info">
+        <span class="idx">WEB / 行銷 LANDING PAGE</span>
+        <h3>Longevity</h3>
+        <p>行銷用 landing page:從視覺到轉換流程自己寫,不靠模板,載入快、動效準。</p>
+        <a>觀看專案 VIEW →</a>
+      </div>
+    </article>
+
+    <h2 class="works-head" style="margin-top:40px">Client Sites</h2>
+    <p class="works-head-zh">接案作品。Duda 與 WordPress 電商架站,快速、穩定、好維護。</p>
+    <div class="client-wall">
+      <div><b>Shuāng 雙</b><span>SHUANGTW.COM · WORDPRESS / 無鋼圈內衣電商</span></div>
+      <div><b>銘皇農場</b><span>MINGHUANGTW.COM · WORDPRESS / 山葵農產電商</span></div>
+      <div><b>Sweet Square 麟肆壹</b><span>SWEETSQUARE.COM.TW · DUDA / 牛軋糖電商</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 3. About + 能力 ═══ -->
+<section class="spec">
+  <span class="spec-tag">SEC 3:ABOUT</span>
+  <p>離開 3D 空間、回到平面的段落,節奏上讓訪客喘息。<b>動效規格:</b>標題以 anime.js 逐字浮現(SplitText 效果),能力格子 hover 時亮起。1:2 不對稱欄位。</p>
+</section>
+<div class="frame">
+  <div class="frame-bar"><i></i><i></i><i></i>&nbsp; / 主體驗(續)</div>
+  <div class="about">
+    <span class="col-label">ABOUT / 關於</span>
+    <div>
+      <h2>電商用最快的方式上線,系統用<em>自己的程式碼</em>打造。</h2>
+      <p>接案開發者。客戶的電商官網用 Duda 或 WordPress 快速穩定地架起來;需要量身打造的系統,從資料庫到介面都自己寫。這個網站本身,就是我前端能力的證明。</p>
+      <p>E-commerce on Duda and WordPress. Custom systems built from scratch. This site is the proof of craft.</p>
+      <ul class="caps">
+        <li>自研系統<small>資料庫到介面</small></li>
+        <li>Duda / WordPress<small>電商快速架站</small></li>
+        <li>Next.js / React<small>架構與效能</small></li>
+        <li>WebGL / anime.js<small>本站就是示範</small></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 4. Contact ═══ -->
+<section class="spec">
+  <span class="spec-tag">SEC 4:CONTACT</span>
+  <p>單一巨型 CTA(hover 看底線動效)。<b>動效規格:</b>實作版滑鼠靠近時信箱文字有磁吸位移(anime.js spring),背景粒子聚攏成游標周圍的光暈。</p>
+</section>
+<div class="frame">
+  <div class="frame-bar"><i></i><i></i><i></i>&nbsp; / 主體驗(末段)</div>
+  <div class="contact">
+    <h2><a>hello@yourname.dev</a></h2>
+    <div class="contact-foot">
+      <span>有想做的實驗?寫信聊聊。Got an experiment in mind?</span>
+      <span><a>GitHub</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a>Twitter</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a>Email</a></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 5. /info 靜態替代版 ═══ -->
+<section class="spec">
+  <span class="spec-tag">SEC 5:/INFO 靜態版</span>
+  <p>無障礙與 SEO 的保險:純 HTML、淺色、零動效,內容與主體驗完全等價。reduced-motion 使用者與搜尋引擎的主要入口。</p>
+</section>
+<div class="frame" id="frame-info">
+  <div class="frame-bar"><i></i><i></i><i></i>&nbsp; /info(靜態替代版)</div>
+  <div class="plain">
+    <h2>YOURNAME:接案開發者</h2>
+    <p class="lede">這是本站的靜態版本,內容與互動版完全相同。This is the static version of this site.</p>
+    <ul>
+      <li><a>POS Cloud</a>:自研雲端櫃位系統(員工前台/店長後台)</li>
+      <li><a>WooCommerce CRM</a>:自研電商數據分析儀表板</li>
+      <li><a>Longevity</a>:自製行銷 landing page</li>
+      <li><a>Shuāng 雙</a>:無鋼圈內衣電商(WordPress)</li>
+      <li><a>銘皇農場</a>:山葵農產電商(WordPress)</li>
+      <li><a>Sweet Square 麟肆壹</a>:牛軋糖電商(Duda)</li>
+      <li>聯絡:<a>hello@yourname.dev</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ 6. Design Tokens ═══ -->
+<div class="tokens">
+  <h2>Design Tokens</h2>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#0F172A"></div><div class="lab"><b>#0F172A</b>background / 主底</div></div>
+    <div class="sw"><div class="chip" style="background:#0A101F"></div><div class="lab"><b>#0A101F</b>deep / 深層底</div></div>
+    <div class="sw"><div class="chip" style="background:#F8FAFC"></div><div class="lab"><b>#F8FAFC</b>foreground / 前景文字</div></div>
+    <div class="sw"><div class="chip" style="background:#8A94A8"></div><div class="lab"><b>#8A94A8</b>muted / 次要文字</div></div>
+    <div class="sw"><div class="chip" style="background:#22C55E"></div><div class="lab"><b>#22C55E</b>accent / 全站唯一彩色</div></div>
+  </div>
+  <div class="type-table">
+    <div class="type-row"><span class="role">DISPLAY / Space Grotesk 600</span><span class="t-display">出乎意料 Unexpected</span></div>
+    <div class="type-row"><span class="role">H2 / Space Grotesk 600</span><span class="t-h2">Selected Works 精選作品</span></div>
+    <div class="type-row"><span class="role">BODY / Archivo + Noto Sans TC</span><span class="t-body">內文使用 Archivo 搭配 Noto Sans TC,行高 1.6,單行寬度控制在 58ch 以內,確保雙語混排的可讀性。</span></div>
+    <div class="type-row"><span class="role">META / 等寬字型</span><span class="t-mono">WORK / 生成藝術 · TAIPEI, TW</span></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 粒子場:實際 WebGL hero 的低保真模擬 */
+  var cv = document.getElementById('field');
+  var ctx = cv.getContext('2d');
+  var pts = [], mouse = { x: -9999, y: -9999 };
+  var W, H, GAP = 46;
+
+  function build() {
+    var r = cv.parentElement.getBoundingClientRect();
+    W = cv.width = r.width;
+    H = cv.height = r.height;
+    pts = [];
+    for (var y = GAP / 2; y < H; y += GAP)
+      for (var x = GAP / 2; x < W; x += GAP)
+        pts.push({ ox: x, oy: y, x: x, y: y });
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      var dx = p.ox - mouse.x, dy = p.oy - mouse.y;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      var f = Math.max(0, 1 - d / 190);
+      var tx = p.ox + dx / (d || 1) * f * 42;
+      var ty = p.oy + dy / (d || 1) * f * 42;
+      p.x += (tx - p.x) * 0.09;
+      p.y += (ty - p.y) * 0.09;
+      var lit = f > 0.02;
+      ctx.fillStyle = lit
+        ? 'rgba(34,197,94,' + (0.25 + f * 0.65) + ')'
+        : 'rgba(138,148,168,0.28)';
+      var s = lit ? 1.6 + f * 2.4 : 1.4;
+      ctx.fillRect(p.x - s / 2, p.y - s / 2, s, s);
+    }
+    if (!reduce) requestAnimationFrame(tick);
+  }
+
+  var hero = cv.parentElement;
+  hero.addEventListener('mousemove', function (e) {
+    var r = cv.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  });
+  hero.addEventListener('mouseleave', function () { mouse.x = -9999; mouse.y = -9999; });
+  addEventListener('resize', build);
+  build();
+  if (reduce) { tick(); } else { requestAnimationFrame(tick); }
+
+  /* 入口按鈕:模擬 narrow 式 3D 翻轉轉場與「靜態版」跳轉 */
+  var gateFrame = document.getElementById('frame-gate');
+  var heroFrame = document.getElementById('frame-hero');
+  document.getElementById('enter-btn').addEventListener('click', function () {
+    if (reduce) {
+      heroFrame.scrollIntoView();
+      return;
+    }
+    gateFrame.classList.remove('flip-out');
+    heroFrame.classList.remove('flip-in');
+    void gateFrame.offsetWidth; /* 重置動畫 */
+    gateFrame.classList.add('flip-out');
+    setTimeout(function () {
+      heroFrame.scrollIntoView({ behavior: 'instant', block: 'start' });
+      heroFrame.classList.add('flip-in');
+      setTimeout(function () {
+        gateFrame.classList.remove('flip-out');
+        heroFrame.classList.remove('flip-in');
+      }, 1000);
+    }, 560);
+  });
+  document.getElementById('read-btn').addEventListener('click', function () {
+    document.getElementById('frame-info').scrollIntoView({ behavior: reduce ? 'instant' : 'smooth', block: 'start' });
+  });
+
+  /* Scroll 進場:實作版將由 anime.js onScroll 驅動 */
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.25 });
+    document.querySelectorAll('.plane').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.plane').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
+</script>
