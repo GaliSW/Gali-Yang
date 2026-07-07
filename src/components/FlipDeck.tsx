@@ -1,9 +1,10 @@
 'use client';
-import { useCallback, useEffect, useReducer, useRef } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useRouter } from '@/i18n/routing';
 import { flipReducer, initialState, type FlipEvent, type SectionDef } from '@/lib/flip-machine';
 import { useReducedMotion } from '@/lib/use-reduced-motion';
 import { useStaggerIn } from '@/lib/use-stagger-in';
+import LogoIntro from '@/components/LogoIntro';
 import Gate from './sections/Gate';
 import Hero from './sections/Hero';
 import Systems from './sections/Systems';
@@ -21,6 +22,7 @@ const TOUCH_THRESHOLD = 50;
 export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const reduce = useReducedMotion();
   const router = useRouter();
+  const [intro, setIntro] = useState(true);
   const [state, rawDispatch] = useReducer(
     (s: typeof initialState, e: FlipEvent) => flipReducer(s, SECTIONS, e), initialState);
   const prevSection = useRef(state.section);
@@ -74,10 +76,17 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
     <Contact key="contact" {...sectionProps(5)} />,
   ];
 
-  if (reduce) return <main>{bodies.slice(1)}<div className="hidden">{bodies[0]}</div></main>;
+  if (reduce) return (
+    <>
+      {intro && <LogoIntro onDone={() => setIntro(false)} />}
+      <main>{bodies.slice(1)}<div className="hidden">{bodies[0]}</div></main>
+    </>
+  );
 
   return (
-    <main className="fixed inset-0 overflow-hidden" aria-live="polite">
+    <>
+      {intro && <LogoIntro onDone={() => setIntro(false)} />}
+      <main className="fixed inset-0 overflow-hidden" aria-live="polite">
       {SECTIONS.map((def, i) => {
         const isCur = i === state.section;
         const isPrev = state.locked && i === prevSection.current && prevSection.current !== state.section;
@@ -94,7 +103,8 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
           </SectionShell>
         );
       })}
-    </main>
+      </main>
+    </>
   );
 }
 
