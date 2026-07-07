@@ -1,7 +1,7 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import Magnetic from '@/components/Magnetic';
-import AnimeShapes from '@/components/AnimeShapes';
+import SignalWaves from '@/components/SignalWaves';
 import ScrambleTitle from '@/components/ScrambleTitle';
 
 type Props = { active: boolean; locale: 'zh' | 'en'; onEnter: () => void; onRead: () => void };
@@ -10,7 +10,7 @@ export default function Gate({ onEnter, onRead }: Props) {
   const t = useTranslations('gate');
   return (
     <div className="relative grid min-h-dvh place-items-center overflow-hidden bg-deep px-6 text-center">
-      <AnimeShapes vignette="center" />
+      <SignalWaves vignette="center" />
       {/* CRT 掃描線 */}
       <div
         aria-hidden
