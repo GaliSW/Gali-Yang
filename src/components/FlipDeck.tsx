@@ -23,10 +23,12 @@ const SECTIONS: SectionDef[] = [
 const WHEEL_THRESHOLD = 80;
 const TOUCH_THRESHOLD = 50;
 
+let introSeen = false;
+
 export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const reduce = useReducedMotion();
   const router = useRouter();
-  const [intro, setIntro] = useState(true);
+  const [intro, setIntro] = useState(() => !introSeen);
   const [glOk, setGlOk] = useState(false);
   const [state, rawDispatch] = useReducer(
     (s: typeof initialState, e: FlipEvent) => flipReducer(s, SECTIONS, e), initialState);
@@ -35,10 +37,13 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const touchY = useRef(0);
 
   const dispatch = useCallback((e: FlipEvent) => rawDispatch(e), []);
+  const handleIntroDone = useCallback(() => { introSeen = true; setIntro(false); }, []);
 
   useEffect(() => {
     const isMobile = matchMedia('(max-width: 768px)').matches;
-    setGlOk(shouldLoadGL(navigator as { deviceMemory?: number }, isMobile, reduce));
+    const canvas = document.createElement('canvas');
+    const hasGL = !!(canvas.getContext('webgl2') || canvas.getContext('webgl'));
+    setGlOk(hasGL && shouldLoadGL(navigator as { deviceMemory?: number }, isMobile, reduce));
   }, [reduce]);
 
   useEffect(() => {
@@ -52,6 +57,7 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
       }
     };
     const onKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
       if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); dispatch({ type: 'advance' }); }
       if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); dispatch({ type: 'retreat' }); }
     };
@@ -80,7 +86,7 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const bodies = [
     <Gate key="gate" {...sectionProps(0)} onEnter={() => dispatch({ type: 'enter' })} onRead={() => router.push('/info')} />,
     <Hero key="hero" {...sectionProps(1)} gl={glOk ? <ParticleField /> : null} />,
-    <Systems key="systems" {...sectionProps(2)} gl={glOk} />,
+    <Systems key="systems" {...sectionProps(2)} gl={glOk} staticAll={reduce} />,
     <ClientSites key="clients" {...sectionProps(3)} />,
     <About key="about" {...sectionProps(4)} />,
     <Contact key="contact" {...sectionProps(5)} />,
@@ -88,14 +94,14 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
 
   if (reduce) return (
     <>
-      {intro && <LogoIntro onDone={() => setIntro(false)} />}
+      {intro && <LogoIntro onDone={handleIntroDone} />}
       <main>{bodies.slice(1)}<div className="hidden">{bodies[0]}</div></main>
     </>
   );
 
   return (
     <>
-      {intro && <LogoIntro onDone={() => setIntro(false)} />}
+      {intro && <LogoIntro onDone={handleIntroDone} />}
       <main id="page-root" className="fixed inset-0 overflow-hidden" aria-live="polite">
       {SECTIONS.map((def, i) => {
         const isCur = i === state.section;

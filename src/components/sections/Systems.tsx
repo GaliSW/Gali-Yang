@@ -6,18 +6,21 @@ import TransitionLink from '@/components/TransitionLink';
 
 const ProjectPlaneLazy = dynamic(() => import('@/components/gl/ProjectPlane'), { ssr: false });
 
-type Props = { active: boolean; step?: number; locale: 'zh' | 'en' };
+type Props = { active: boolean; step?: number; locale: 'zh' | 'en'; staticAll?: boolean };
 
-export default function Systems({ step = 0, locale, gl }: Props & { gl?: boolean }) {
+export default function Systems({ step = 0, locale, gl, staticAll = false }: Props & { gl?: boolean }) {
   const t = useTranslations('works');
   return (
     <div className="min-h-dvh overflow-hidden bg-bg px-8 py-16">
       <h2 className="text-4xl font-semibold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{t('systemsHead')}</h2>
       <p className="mt-1 text-sm text-muted">{t('systemsSub')}</p>
-      <div className="mt-10 flex transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
-        style={{ transform: `translateX(-${step * 100}%)` }}>
+      <div className={staticAll ? 'mt-10' : 'mt-10 flex transition-transform duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]'}
+        style={staticAll ? undefined : { transform: `translateX(-${step * 100}%)` }}>
         {systems.map((s, i) => (
-          <article key={s.slug} className="grid w-full shrink-0 grid-cols-1 items-center gap-8 md:grid-cols-12" aria-hidden={i !== step}>
+          <article key={s.slug}
+            className={`grid w-full shrink-0 grid-cols-1 items-center gap-8 md:grid-cols-12 ${staticAll && i > 0 ? 'mt-16' : ''}`}
+            aria-hidden={staticAll ? undefined : i !== step}
+            {...(!staticAll && i !== step ? { inert: true } : {})}>
             <div className="md:col-span-7">
               <div className="aspect-[16/10] overflow-hidden rounded border border-line">
                 {gl && i === step ? <ProjectPlaneLazy palette={s.palette} /> : (
@@ -35,11 +38,13 @@ export default function Systems({ step = 0, locale, gl }: Props & { gl?: boolean
           </article>
         ))}
       </div>
-      <div className="mt-8 flex gap-2" aria-hidden>
-        {systems.map((s, i) => (
-          <span key={s.slug} className={`h-px w-10 ${i === step ? 'bg-accent' : 'bg-line'}`} />
-        ))}
-      </div>
+      {!staticAll && (
+        <div className="mt-8 flex gap-2" aria-hidden>
+          {systems.map((s, i) => (
+            <span key={s.slug} className={`h-px w-10 ${i === step ? 'bg-accent' : 'bg-line'}`} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
