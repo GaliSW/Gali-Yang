@@ -1,6 +1,8 @@
-import { useTranslations } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
+import FlipDeck from '@/components/FlipDeck';
 
-export default function Home() {
-  const t = useTranslations('site');
-  return <main className="min-h-dvh grid place-items-center">{t('brand')}</main>;
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  return <FlipDeck locale={locale as 'zh' | 'en'} />;
 }
