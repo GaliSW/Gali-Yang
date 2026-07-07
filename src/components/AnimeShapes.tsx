@@ -6,7 +6,7 @@ import { useReducedMotion } from '@/lib/use-reduced-motion';
 // animejs.com 風格背景:幾何圖形網格,從中心輻射的 stagger 波浪(anime.js 招牌手法)
 const COLS = 16;
 const ROWS = 9;
-const GLYPHS = ['·', '○', '+', '◇', '△', '●', '□'];
+const GLYPHS = ['·', '○', '+', '◇', '△', 'ア', '●', 'ニ', '□', 'メ'];
 
 export default function AnimeShapes({ vignette = 'center' }: { vignette?: 'center' | 'left' }) {
   const ref = useRef<HTMLDivElement>(null);

@@ -21,10 +21,12 @@
     "platformLabel": "Platform"
   },
   "gate": {
-    "head": "This site is an interactive experiment.",
-    "body": "It involves a lot of motion and 3D movement in space. If you prefer a quiet read, we've prepared a full static version.",
-    "enter": "ENTER EXPERIENCE",
-    "read": "READ STATIC VERSION"
+    "eyebrow": "FREELANCE DEVELOPER",
+    "head": "GARY YANG",
+    "tagline": "One-stop web development, from design to launch.",
+    "body": "This site is my work: heavy on motion and 3D. Prefer a quiet read? A full static version is one click away.",
+    "enter": "ENTER",
+    "read": "READ STATIC"
   },
   "works": {
     "systemsHead": "Systems",

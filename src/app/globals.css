@@ -33,6 +33,21 @@ body { font-family: var(--font-body); line-height: 1.6; }
 @keyframes flipOutRev { to { transform: perspective(1300px) rotateX(74deg) translateY(4%); opacity: 0; } }
 @keyframes flipInRev { from { transform: perspective(1300px) rotateX(-58deg); opacity: 0; } to { transform: none; opacity: 1; } }
 
+/* Cyberpunk 元素(Gate 入口) */
+.neon-green {
+  text-shadow: 0 0 6px rgba(34, 197, 94, 0.45), 0 0 28px rgba(34, 197, 94, 0.22);
+}
+.cursor-blink { animation: blink 1.1s steps(2, start) infinite; }
+@keyframes blink { to { visibility: hidden; } }
+.glitch-flicker { animation: glitchFlicker 6s infinite; }
+@keyframes glitchFlicker {
+  0%, 91%, 94.5%, 100% { transform: none; opacity: 1; }
+  92% { transform: translateX(3px) skewX(-4deg); opacity: 0.85; }
+  93% { transform: translateX(-3px); clip-path: inset(18% 0 42% 0); }
+  94% { transform: translateX(2px) skewX(3deg); clip-path: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .flip-out, .flip-in, .flip-out-rev, .flip-in-rev { animation: none; }
+  .cursor-blink, .glitch-flicker { animation: none; }
 }

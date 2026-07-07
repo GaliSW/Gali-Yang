@@ -21,8 +21,10 @@
     "platformLabel": "平台"
   },
   "gate": {
-    "head": "這個網站是一場互動實驗。",
-    "body": "包含大量動態與 3D 空間移動。若你偏好安靜的閱讀,我們準備了完整的靜態版本。",
+    "eyebrow": "FREELANCE DEVELOPER / 接案開發者",
+    "head": "GARY YANG",
+    "tagline": "從設計到上線,一站式網頁整合開發服務。",
+    "body": "這個網站本身,就是我的作品。含大量動態與 3D 互動;偏好安靜閱讀,也有完整的靜態版本。",
     "enter": "進入體驗 ENTER",
     "read": "閱讀靜態版 READ"
   },
