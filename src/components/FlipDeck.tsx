@@ -96,7 +96,7 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   return (
     <>
       {intro && <LogoIntro onDone={() => setIntro(false)} />}
-      <main className="fixed inset-0 overflow-hidden" aria-live="polite">
+      <main id="page-root" className="fixed inset-0 overflow-hidden" aria-live="polite">
       {SECTIONS.map((def, i) => {
         const isCur = i === state.section;
         const isPrev = state.locked && i === prevSection.current && prevSection.current !== state.section;
