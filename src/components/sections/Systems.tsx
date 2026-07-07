@@ -1,10 +1,13 @@
 'use client';
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 import { systems } from '@/content/projects';
 
-type Props = { active: boolean; step?: number; locale: 'zh' | 'en'; gl?: React.ReactNode };
+const ProjectPlaneLazy = dynamic(() => import('@/components/gl/ProjectPlane'), { ssr: false });
 
-export default function Systems({ step = 0, locale }: Props) {
+type Props = { active: boolean; step?: number; locale: 'zh' | 'en' };
+
+export default function Systems({ step = 0, locale, gl }: Props & { gl?: boolean }) {
   const t = useTranslations('works');
   return (
     <div className="min-h-dvh overflow-hidden bg-bg px-8 py-16">
@@ -15,8 +18,12 @@ export default function Systems({ step = 0, locale }: Props) {
         {systems.map((s, i) => (
           <article key={s.slug} className="grid w-full shrink-0 grid-cols-1 items-center gap-8 md:grid-cols-12" aria-hidden={i !== step}>
             <div className="md:col-span-7">
-              <div className="tex aspect-[16/10] rounded border border-line"
-                style={{ background: `linear-gradient(115deg, ${s.palette[0]}, ${s.palette[1]} 45%, ${s.palette[2]} 75%, #0A101F 95%)` }} />
+              <div className="aspect-[16/10] overflow-hidden rounded border border-line">
+                {gl && i === step ? <ProjectPlaneLazy palette={s.palette} /> : (
+                  <div className="tex h-full w-full"
+                    style={{ background: `linear-gradient(115deg, ${s.palette[0]}, ${s.palette[1]} 45%, ${s.palette[2]} 75%, #0A101F 95%)` }} />
+                )}
+              </div>
             </div>
             <div className="md:col-span-5">
               <span className="font-mono text-xs tracking-widest text-accent" style={{ fontFamily: 'var(--font-mono-brand)' }}>{s.tag[locale]}</span>

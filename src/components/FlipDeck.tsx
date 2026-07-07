@@ -80,7 +80,7 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const bodies = [
     <Gate key="gate" {...sectionProps(0)} onEnter={() => dispatch({ type: 'enter' })} onRead={() => router.push('/info')} />,
     <Hero key="hero" {...sectionProps(1)} gl={glOk ? <ParticleField /> : null} />,
-    <Systems key="systems" {...sectionProps(2)} />,
+    <Systems key="systems" {...sectionProps(2)} gl={glOk} />,
     <ClientSites key="clients" {...sectionProps(3)} />,
     <About key="about" {...sectionProps(4)} />,
     <Contact key="contact" {...sectionProps(5)} />,
