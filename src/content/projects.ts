@@ -2,10 +2,12 @@ export type Localized = { zh: string; en: string };
 export type SystemProject = {
   slug: string; kind: 'system'; tag: Localized; name: Localized;
   blurb: Localized; url: string; palette: [string, string, string];
+  shot: string;
 };
 export type ClientSite = {
   kind: 'client'; name: Localized; domain: string;
   platform: 'WordPress' | 'Duda'; note: Localized;
+  shot: string;
 };
 
 export const systems: SystemProject[] = [
@@ -19,6 +21,7 @@ export const systems: SystemProject[] = [
     },
     url: 'https://sweet-pos.vercel.app/',
     palette: ['#0d2b1c', '#123a5c', '#22C55E'],
+    shot: '/shots/pos-cloud.jpg',
   },
   {
     slug: 'woocommerce-crm', kind: 'system',
@@ -30,6 +33,7 @@ export const systems: SystemProject[] = [
     },
     url: 'https://woocommerce-statistics-frontend-sme.vercel.app/',
     palette: ['#101c3f', '#22C55E', '#0d3327'],
+    shot: '/shots/woocommerce-crm.jpg',
   },
   {
     slug: 'longevity', kind: 'system',
@@ -41,13 +45,14 @@ export const systems: SystemProject[] = [
     },
     url: 'https://longevity-tan.vercel.app/',
     palette: ['#06251a', '#1c2f55', '#34d399'],
+    shot: '/shots/longevity.jpg',
   },
 ];
 
 export const clientSites: ClientSite[] = [
-  { kind: 'client', name: { zh: 'Shuāng 雙', en: 'Shuāng' }, domain: 'shuangtw.com', platform: 'WordPress', note: { zh: '無鋼圈內衣電商', en: 'Wireless lingerie e-commerce' } },
-  { kind: 'client', name: { zh: '銘皇農場', en: 'Minghuang Farm' }, domain: 'minghuangtw.com', platform: 'WordPress', note: { zh: '山葵農產電商', en: 'Wasabi farm e-commerce' } },
-  { kind: 'client', name: { zh: 'Sweet Square 麟肆壹', en: 'Sweet Square' }, domain: 'sweetsquare.com.tw', platform: 'Duda', note: { zh: '牛軋糖電商', en: 'Nougat e-commerce' } },
+  { kind: 'client', name: { zh: 'Shuāng 雙', en: 'Shuāng' }, domain: 'shuangtw.com', platform: 'WordPress', note: { zh: '無鋼圈內衣電商', en: 'Wireless lingerie e-commerce' }, shot: '/shots/shuangtw-com.jpg' },
+  { kind: 'client', name: { zh: '銘皇農場', en: 'Minghuang Farm' }, domain: 'minghuangtw.com', platform: 'WordPress', note: { zh: '山葵農產電商', en: 'Wasabi farm e-commerce' }, shot: '/shots/minghuangtw-com.jpg' },
+  { kind: 'client', name: { zh: 'Sweet Square 麟肆壹', en: 'Sweet Square' }, domain: 'sweetsquare.com.tw', platform: 'Duda', note: { zh: '牛軋糖電商', en: 'Nougat e-commerce' }, shot: '/shots/sweetsquare-com-tw.jpg' },
 ];
 
 export function getSystem(slug: string): SystemProject | undefined {

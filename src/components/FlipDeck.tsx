@@ -20,10 +20,14 @@ const SECTIONS: SectionDef[] = [
   { id: 'gate', steps: 1 }, { id: 'hero', steps: 1 }, { id: 'systems', steps: 3 },
   { id: 'clients', steps: 1 }, { id: 'about', steps: 1 }, { id: 'contact', steps: 1 },
 ];
-const WHEEL_THRESHOLD = 80;
+const WHEEL_THRESHOLD = 30;
 const TOUCH_THRESHOLD = 50;
+const WHEEL_IDLE_RESET_MS = 150;
+const POST_FLIP_COOLDOWN_MS = 250;
 
 let introSeen = false;
+// 保留使用者離開時的板塊位置:語言切換、從 /work 返回都會還原,不再跳回閘門
+let savedPosition: { section: number; step: number } | null = null;
 
 export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const reduce = useReducedMotion();
@@ -31,9 +35,13 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const [intro, setIntro] = useState(() => !introSeen);
   const [glOk, setGlOk] = useState(false);
   const [state, rawDispatch] = useReducer(
-    (s: typeof initialState, e: FlipEvent) => flipReducer(s, SECTIONS, e), initialState);
+    (s: typeof initialState, e: FlipEvent) => flipReducer(s, SECTIONS, e),
+    undefined,
+    () => (savedPosition ? { ...initialState, ...savedPosition } : initialState));
   const prevSection = useRef(state.section);
   const wheelAcc = useRef(0);
+  const lastWheelAt = useRef(0);
+  const cooldownUntil = useRef(0);
   const touchY = useRef(0);
 
   const dispatch = useCallback((e: FlipEvent) => rawDispatch(e), []);
@@ -50,6 +58,11 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
     if (reduce) return; // reduced-motion:一般文件流,不劫持
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
+      const now = performance.now();
+      if (now < cooldownUntil.current) { wheelAcc.current = 0; return; } // 翻轉剛結束:吃掉慣性尾巴
+      if (now - lastWheelAt.current > WHEEL_IDLE_RESET_MS) wheelAcc.current = 0; // 新手勢,不累計舊值
+      if (Math.sign(e.deltaY) !== Math.sign(wheelAcc.current)) wheelAcc.current = 0; // 換方向即重置
+      lastWheelAt.current = now;
       wheelAcc.current += e.deltaY;
       if (Math.abs(wheelAcc.current) > WHEEL_THRESHOLD) {
         dispatch({ type: wheelAcc.current > 0 ? 'advance' : 'retreat' });
@@ -79,6 +92,10 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   }, [dispatch, reduce]);
 
   useEffect(() => { prevSection.current = state.section; }, [state.section]);
+  useEffect(() => {
+    savedPosition = { section: state.section, step: state.step };
+    if (!state.locked) cooldownUntil.current = performance.now() + POST_FLIP_COOLDOWN_MS;
+  }, [state.section, state.step, state.locked]);
 
   const sectionProps = (i: number) => ({
     active: state.section === i, locale, step: state.section === i ? state.step : 0,

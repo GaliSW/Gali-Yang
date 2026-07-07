@@ -1,14 +1,16 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import Magnetic from '@/components/Magnetic';
+import TechGrid from '@/components/TechGrid';
 
 type Props = { active: boolean; locale: 'zh' | 'en'; onEnter: () => void; onRead: () => void };
 
 export default function Gate({ onEnter, onRead }: Props) {
   const t = useTranslations('gate');
   return (
-    <div className="grid min-h-dvh place-items-center bg-deep px-6 text-center">
-      <div className="max-w-md">
+    <div className="relative grid min-h-dvh place-items-center overflow-hidden bg-deep px-6 text-center">
+      <TechGrid />
+      <div className="relative max-w-md">
         <h2 data-stagger className="text-3xl font-medium tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{t('head')}</h2>
         <p data-stagger className="mt-4 text-sm text-muted">{t('body')}</p>
         <div data-stagger className="mt-8 flex flex-wrap justify-center gap-4">

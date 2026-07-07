@@ -1,17 +1,73 @@
 {
-  "site": { "brand": "YOURNAME", "title": "YOURNAME:接案開發者", "description": "電商網站與客製系統,加上一點讓人停下來的介面。" },
-  "hero": { "line1": "熟悉的介面,", "line2": "出乎意料的行為。", "line3": "Interfaces, unexpected.", "sub": "接案開發者。電商網站與客製系統,加上一點讓人停下來的介面。" },
+  "site": {
+    "brand": "YOURNAME",
+    "title": "YOURNAME:接案開發者",
+    "description": "電商網站與客製系統,加上一點讓人停下來的介面。"
+  },
+  "hero": {
+    "line1": "電商快速上線,",
+    "line2": "系統從零打造。",
+    "line3": "Ship fast. Build deep.",
+    "sub": "接案開發者。Duda / WordPress 電商架站,POS、CRM 等客製系統從資料庫寫到介面。這個網站,就是能力展示。"
+  },
   "info": {
     "title": "YOURNAME:接案開發者",
     "lede": "這是本站的靜態版本,內容與互動版完全相同。",
     "systemsHead": "自研系統",
     "clientsHead": "接案網站",
-    "contact": "聯絡"
+    "contact": "聯絡",
+    "backToInteractive": "返回互動版",
+    "visit": "造訪網站",
+    "platformLabel": "平台"
   },
-  "gate": { "head": "這個網站是一場互動實驗。", "body": "包含大量動態與 3D 空間移動。若你偏好安靜的閱讀,我們準備了完整的靜態版本。", "enter": "進入體驗 ENTER", "read": "閱讀靜態版 READ" },
-  "works": { "systemsHead": "Systems", "systemsSub": "自研系統。從零打造的核心產品,前後端都是自己的程式碼。", "clientsHead": "Client Sites", "clientsSub": "接案作品。Duda 與 WordPress 電商架站,快速、穩定、好維護。", "view": "觀看專案 VIEW" },
-  "work": { "visit": "造訪網站", "back": "回到首頁", "roleLabel": "角色", "role": "設計、前端、後端,一人完成" },
-  "about": { "label": "ABOUT / 關於", "head": "電商用最快的方式上線,系統用自己的程式碼打造。", "p1": "接案開發者。客戶的電商官網用 Duda 或 WordPress 快速穩定地架起來;需要量身打造的系統,從資料庫到介面都自己寫。這個網站本身,就是我前端能力的證明。", "caps": [{ "t": "自研系統", "d": "資料庫到介面" }, { "t": "Duda / WordPress", "d": "電商快速架站" }, { "t": "Next.js / React", "d": "架構與效能" }, { "t": "WebGL / anime.js", "d": "本站就是示範" }] },
-  "contact": { "email": "hello@yourname.dev", "line": "有案子想聊?寫信給我。" },
-  "a11y": { "langSwitch": "切換語言", "staticVersion": "靜態版" }
+  "gate": {
+    "head": "這個網站是一場互動實驗。",
+    "body": "包含大量動態與 3D 空間移動。若你偏好安靜的閱讀,我們準備了完整的靜態版本。",
+    "enter": "進入體驗 ENTER",
+    "read": "閱讀靜態版 READ"
+  },
+  "works": {
+    "systemsHead": "Systems",
+    "systemsSub": "自研系統。從零打造的核心產品,前後端都是自己的程式碼。",
+    "clientsHead": "Client Sites",
+    "clientsSub": "接案作品。Duda 與 WordPress 電商架站,快速、穩定、好維護。",
+    "view": "觀看專案 VIEW"
+  },
+  "work": {
+    "visit": "造訪網站",
+    "back": "回到首頁",
+    "roleLabel": "角色",
+    "role": "設計、前端、後端,一人完成"
+  },
+  "about": {
+    "label": "ABOUT / 關於",
+    "head": "電商用最快的方式上線,系統用自己的程式碼打造。",
+    "p1": "接案開發者。客戶的電商官網用 Duda 或 WordPress 快速穩定地架起來;需要量身打造的系統,從資料庫到介面都自己寫。這個網站本身,就是我前端能力的證明。",
+    "caps": [
+      {
+        "t": "自研系統",
+        "d": "資料庫到介面"
+      },
+      {
+        "t": "Duda / WordPress",
+        "d": "電商快速架站"
+      },
+      {
+        "t": "Next.js / React",
+        "d": "架構與效能"
+      },
+      {
+        "t": "WebGL / anime.js",
+        "d": "本站就是示範"
+      }
+    ]
+  },
+  "contact": {
+    "email": "hello@yourname.dev",
+    "line": "有案子想聊?寫信給我。"
+  },
+  "a11y": {
+    "langSwitch": "切換語言",
+    "staticVersion": "靜態版"
+  }
 }
