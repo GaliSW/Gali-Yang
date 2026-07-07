@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { scrambleFrame } from '@/lib/scramble';
 import { useReducedMotion } from '@/lib/use-reduced-motion';
 
@@ -10,6 +10,8 @@ export default function ScrambleTitle({ text, className }: { text: string; class
   const [display, setDisplay] = useState(text);
   const raf = useRef(0);
   const reduce = useReducedMotion();
+
+  useEffect(() => () => cancelAnimationFrame(raf.current), []);
 
   const play = () => {
     if (reduce) return;
