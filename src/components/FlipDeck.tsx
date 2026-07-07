@@ -1,16 +1,20 @@
 'use client';
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useRouter } from '@/i18n/routing';
 import { flipReducer, initialState, type FlipEvent, type SectionDef } from '@/lib/flip-machine';
 import { useReducedMotion } from '@/lib/use-reduced-motion';
 import { useStaggerIn } from '@/lib/use-stagger-in';
 import LogoIntro from '@/components/LogoIntro';
+import { shouldLoadGL } from './gl/device';
 import Gate from './sections/Gate';
 import Hero from './sections/Hero';
 import Systems from './sections/Systems';
 import ClientSites from './sections/ClientSites';
 import About from './sections/About';
 import Contact from './sections/Contact';
+
+const ParticleField = dynamic(() => import('./gl/ParticleField'), { ssr: false });
 
 const SECTIONS: SectionDef[] = [
   { id: 'gate', steps: 1 }, { id: 'hero', steps: 1 }, { id: 'systems', steps: 3 },
@@ -23,6 +27,7 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const reduce = useReducedMotion();
   const router = useRouter();
   const [intro, setIntro] = useState(true);
+  const [glOk, setGlOk] = useState(false);
   const [state, rawDispatch] = useReducer(
     (s: typeof initialState, e: FlipEvent) => flipReducer(s, SECTIONS, e), initialState);
   const prevSection = useRef(state.section);
@@ -30,6 +35,11 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   const touchY = useRef(0);
 
   const dispatch = useCallback((e: FlipEvent) => rawDispatch(e), []);
+
+  useEffect(() => {
+    const isMobile = matchMedia('(max-width: 768px)').matches;
+    setGlOk(shouldLoadGL(navigator as { deviceMemory?: number }, isMobile, reduce));
+  }, [reduce]);
 
   useEffect(() => {
     if (reduce) return; // reduced-motion:一般文件流,不劫持
@@ -69,7 +79,7 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   });
   const bodies = [
     <Gate key="gate" {...sectionProps(0)} onEnter={() => dispatch({ type: 'enter' })} onRead={() => router.push('/info')} />,
-    <Hero key="hero" {...sectionProps(1)} />,
+    <Hero key="hero" {...sectionProps(1)} gl={glOk ? <ParticleField /> : null} />,
     <Systems key="systems" {...sectionProps(2)} />,
     <ClientSites key="clients" {...sectionProps(3)} />,
     <About key="about" {...sectionProps(4)} />,
