@@ -42,4 +42,19 @@ describe('flip-machine', () => {
     expect(flipReducer(last, sections, { type: 'advance' })).toEqual(last);
     expect(flipReducer(initialState, sections, { type: 'retreat' })).toEqual(initialState);
   });
+  it('jump 直接跳板塊並依方向鎖定', () => {
+    const atHero = { section: 1, step: 0, locked: false, direction: 1 as const };
+    expect(flipReducer(atHero, sections, { type: 'jump', section: 4 }))
+      .toEqual({ section: 4, step: 0, locked: true, direction: 1 });
+    const atAbout = { section: 4, step: 0, locked: false, direction: 1 as const };
+    expect(flipReducer(atAbout, sections, { type: 'jump', section: 2 }))
+      .toEqual({ section: 2, step: 0, locked: true, direction: -1 });
+  });
+  it('jump 到相同板塊、越界或 locked 時無效', () => {
+    const atHero = { section: 1, step: 0, locked: false, direction: 1 as const };
+    expect(flipReducer(atHero, sections, { type: 'jump', section: 1 })).toEqual(atHero);
+    expect(flipReducer(atHero, sections, { type: 'jump', section: 9 })).toEqual(atHero);
+    const locked = { section: 1, step: 0, locked: true, direction: 1 as const };
+    expect(flipReducer(locked, sections, { type: 'jump', section: 3 })).toEqual(locked);
+  });
 });

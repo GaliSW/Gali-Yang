@@ -1,12 +1,20 @@
 export type FlipState = { section: number; step: number; locked: boolean; direction: 1 | -1 };
 export type SectionDef = { id: string; steps: number };
-export type FlipEvent = { type: 'advance' } | { type: 'retreat' } | { type: 'settle' } | { type: 'enter' };
+export type FlipEvent =
+  | { type: 'advance' } | { type: 'retreat' } | { type: 'settle' } | { type: 'enter' }
+  | { type: 'jump'; section: number };
 
 export const initialState: FlipState = { section: 0, step: 0, locked: false, direction: 1 };
 
 export function flipReducer(state: FlipState, sections: SectionDef[], event: FlipEvent): FlipState {
   if (event.type === 'settle') return { ...state, locked: false };
   if (state.locked) return state;
+
+  if (event.type === 'jump') {
+    const target = event.section;
+    if (target === state.section || target < 0 || target >= sections.length) return state;
+    return { section: target, step: 0, locked: true, direction: target > state.section ? 1 : -1 };
+  }
 
   if (event.type === 'enter' || event.type === 'advance') {
     const cur = sections[state.section];

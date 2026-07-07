@@ -105,5 +105,12 @@
   "a11y": {
     "langSwitch": "切換語言",
     "staticVersion": "靜態版"
+  },
+  "nav": {
+    "systems": "自研系統",
+    "clients": "接案網站",
+    "about": "關於",
+    "contact": "聯繫",
+    "static": "靜態版"
   }
 }

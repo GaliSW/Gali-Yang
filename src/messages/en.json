@@ -105,5 +105,12 @@
   "a11y": {
     "langSwitch": "Switch language",
     "staticVersion": "Static version"
+  },
+  "nav": {
+    "systems": "Systems",
+    "clients": "Client Sites",
+    "about": "About",
+    "contact": "Contact",
+    "static": "Static"
   }
 }

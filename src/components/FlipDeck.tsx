@@ -6,6 +6,7 @@ import { flipReducer, initialState, type FlipEvent, type SectionDef } from '@/li
 import { useReducedMotion } from '@/lib/use-reduced-motion';
 import { useStaggerIn } from '@/lib/use-stagger-in';
 import LogoIntro from '@/components/LogoIntro';
+import NavBar from '@/components/NavBar';
 import { shouldLoadGL } from './gl/device';
 import Gate from './sections/Gate';
 import Hero from './sections/Hero';
@@ -112,13 +113,23 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
   if (reduce) return (
     <>
       {intro && <LogoIntro onDone={handleIntroDone} />}
-      <main>{bodies.slice(1)}<div className="hidden">{bodies[0]}</div></main>
+      <NavBar locale={locale} current={state.section} reduce onJump={() => {}} />
+      <main className="pt-14">
+        {bodies.slice(1).map((body, i) => (
+          <div key={SECTIONS[i + 1].id} id={SECTIONS[i + 1].id}>{body}</div>
+        ))}
+        <div className="hidden">{bodies[0]}</div>
+      </main>
     </>
   );
 
   return (
     <>
       {intro && <LogoIntro onDone={handleIntroDone} />}
+      {state.section >= 1 && (
+        <NavBar locale={locale} current={state.section} reduce={false}
+          onJump={(s) => dispatch({ type: 'jump', section: s })} />
+      )}
       <main id="page-root" className="fixed inset-0 overflow-hidden" aria-live="polite">
       {SECTIONS.map((def, i) => {
         const isCur = i === state.section;
