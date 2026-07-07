@@ -8,7 +8,7 @@ const COLS = 16;
 const ROWS = 9;
 const GLYPHS = ['·', '○', '+', '◇', '△', '●', '□'];
 
-export default function AnimeShapes() {
+export default function AnimeShapes({ vignette = 'center' }: { vignette?: 'center' | 'left' }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
 
@@ -47,7 +47,11 @@ export default function AnimeShapes() {
       </div>
       <div
         className="absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse 65% 60% at 38% 45%, rgba(10,16,31,0.82), rgba(10,16,31,0.25) 60%, transparent)' }}
+        style={{
+          background: vignette === 'left'
+            ? 'radial-gradient(ellipse 65% 60% at 38% 45%, rgba(10,16,31,0.82), rgba(10,16,31,0.25) 60%, transparent)'
+            : 'radial-gradient(ellipse 55% 50% at 50% 50%, rgba(10,16,31,0.85), rgba(10,16,31,0.3) 62%, transparent)',
+        }}
       />
     </div>
   );

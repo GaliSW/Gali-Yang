@@ -1,6 +1,5 @@
 'use client';
 import { useTranslations } from 'next-intl';
-import AnimeShapes from '@/components/AnimeShapes';
 import ScrambleTitle from '@/components/ScrambleTitle';
 
 type Props = { active: boolean; locale: 'zh' | 'en'; gl?: React.ReactNode };
@@ -10,7 +9,6 @@ export default function Hero({ gl }: Props) {
   const site = useTranslations('site');
   return (
     <div className="relative min-h-dvh overflow-hidden bg-deep">
-      <AnimeShapes />
       <div className="absolute inset-0">{gl}</div>
       <div className="relative z-10 px-8 pt-24 pb-16">
         <span data-stagger className="mb-6 block font-mono text-xs tracking-[0.22em] text-muted" style={{ fontFamily: 'var(--font-mono-brand)' }}>{site('brand')}©</span>

@@ -1,7 +1,7 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import Magnetic from '@/components/Magnetic';
-import TechGrid from '@/components/TechGrid';
+import AnimeShapes from '@/components/AnimeShapes';
 
 type Props = { active: boolean; locale: 'zh' | 'en'; onEnter: () => void; onRead: () => void };
 
@@ -9,7 +9,7 @@ export default function Gate({ onEnter, onRead }: Props) {
   const t = useTranslations('gate');
   return (
     <div className="relative grid min-h-dvh place-items-center overflow-hidden bg-deep px-6 text-center">
-      <TechGrid />
+      <AnimeShapes vignette="center" />
       <div className="relative max-w-md">
         <h2 data-stagger className="text-3xl font-medium tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{t('head')}</h2>
         <p data-stagger className="mt-4 text-sm text-muted">{t('body')}</p>
