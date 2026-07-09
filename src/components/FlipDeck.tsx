@@ -16,6 +16,7 @@ import About from './sections/About';
 import Contact from './sections/Contact';
 
 const ParticleField = dynamic(() => import('./gl/ParticleField'), { ssr: false });
+const AuroraField = dynamic(() => import('./gl/AuroraField'), { ssr: false });
 
 const SECTIONS: SectionDef[] = [
   { id: 'gate', steps: 1 }, { id: 'hero', steps: 1 }, { id: 'systems', steps: 3 },
@@ -126,7 +127,7 @@ export default function FlipDeck({ locale }: { locale: 'zh' | 'en' }) {
     active: state.section === i, locale, step: state.section === i ? state.step : 0,
   });
   const bodies = [
-    <Gate key="gate" {...sectionProps(0)} onEnter={() => dispatch({ type: 'enter' })} onRead={() => router.push('/info')} />,
+    <Gate key="gate" {...sectionProps(0)} onEnter={() => dispatch({ type: 'enter' })} onRead={() => router.push('/info')} gl={glOk ? <AuroraField /> : null} />,
     <Hero key="hero" {...sectionProps(1)} gl={glOk ? <ParticleField /> : null} />,
     <Systems key="systems" {...sectionProps(2)} gl={glOk} staticAll={reduce} />,
     <ClientSites key="clients" {...sectionProps(3)} />,

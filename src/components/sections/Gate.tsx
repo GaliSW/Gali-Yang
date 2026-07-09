@@ -1,16 +1,21 @@
 'use client';
 import { useTranslations } from 'next-intl';
 import Magnetic from '@/components/Magnetic';
-import SignalWaves from '@/components/SignalWaves';
 import ScrambleTitle from '@/components/ScrambleTitle';
 
-type Props = { active: boolean; locale: 'zh' | 'en'; onEnter: () => void; onRead: () => void };
+type Props = { active: boolean; locale: 'zh' | 'en'; onEnter: () => void; onRead: () => void; gl?: React.ReactNode };
 
-export default function Gate({ onEnter, onRead }: Props) {
+export default function Gate({ onEnter, onRead, gl }: Props) {
   const t = useTranslations('gate');
   return (
     <div className="relative grid min-h-dvh place-items-center overflow-hidden bg-deep px-6 text-center">
-      <SignalWaves vignette="center" />
+      {/* 即時流動 shader;無 WebGL 時退回靜態綠暈漸層 */}
+      <div className="absolute inset-0">
+        {gl ?? (
+          <div className="h-full w-full"
+            style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(34,197,94,0.12), transparent 65%), radial-gradient(ellipse 90% 80% at 30% 80%, rgba(6,32,26,0.8), transparent)' }} />
+        )}
+      </div>
       {/* CRT 掃描線 */}
       <div
         aria-hidden
